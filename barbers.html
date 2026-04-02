@@ -1,0 +1,1295 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D Barbershop - Barbers</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #050505;
+    --dark2: #0a0a0a;
+    --card: #111111;
+    --gold: #a59d88;
+    --gold2: #c9bfa8;
+    --gold-dim: rgba(165,157,136,0.15);
+    --text: #e2d9cc;
+    --muted: #b6ac98;
+    --border: rgba(165,157,136,0.22);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── LANGUAGE SWITCH ── */
+  #lang-switch {
+    display: flex;
+    gap: 6px;
+    margin-left: 24px;
+  }
+  .lang-btn {
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 5px 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all .3s;
+    border-radius: 2px;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 72px;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    transition: all .3s;
+  }
+
+  /* mobile menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    background: rgba(0,0,0,0.98);
+    backdrop-filter: blur(16px);
+    z-index: 899;
+    flex-direction: column;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    transition: color .3s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 120px 24px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(201,185,154,0.07) 0%, transparent 65%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,0,0,0.92) 0%, transparent 50%);
+  }
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(201,185,154,0.04) 80px);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp .8s .2s forwards;
+  }
+  .hero-logo-img {
+    width: 100px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp .8s .1s forwards;
+    filter: brightness(1.1);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 8vw, 88px);
+    line-height: 1.05;
+    color: var(--gold2);
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp .9s .3s forwards;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp .9s .5s forwards;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp .9s .7s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 14px 36px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .3s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--gold);
+    padding: 14px 36px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: var(--gold-dim); }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    color: var(--gold2);
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+  .section-line {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+  .section-center { text-align: center; }
+  .section-center .section-line { margin: 0 auto 48px; }
+
+  /* ── BARBERS ── */
+  #barbers { background: var(--dark2); }
+  .barbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .barber-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .3s, border-color .3s;
+    position: relative;
+  }
+  .barber-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+  .barber-photo {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #1a2740 0%, #0d1620 100%);
+    position: relative;
+  }
+  .barber-photo-placeholder {
+    width: 100%;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e2f45 0%, #111b27 100%);
+    font-size: 72px;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .barber-info { padding: 28px; }
+  .barber-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--gold2);
+    margin-bottom: 6px;
+  }
+  .barber-role {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .barber-desc { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+  .barber-btn {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+    transition: border-color .3s;
+    cursor: pointer;
+  }
+  .barber-btn:hover { border-color: var(--gold); }
+
+  /* ── BARBER MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,16,25,0.92);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(8px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10;
+  }
+  .modal-header {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 320px;
+  }
+  .modal-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    background: linear-gradient(135deg, #1e2f45 0%, #111b27 100%);
+  }
+  .modal-bio { padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; }
+  .modal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    color: var(--gold2);
+    margin-bottom: 8px;
+  }
+  .modal-role {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .modal-desc { color: var(--muted); font-size: 14px; line-height: 1.8; }
+  .modal-works { padding: 32px 36px; border-top: 1px solid var(--border); }
+  .modal-works-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold2);
+    margin-bottom: 20px;
+  }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .work-item {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #1a2740, #111b27);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+  .work-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+
+  .modal-photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  /* ── GALLERY ── */
+  #gallery { background: var(--dark); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .gallery-item {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #1a2740, #0d1620);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: border-color .3s, transform .3s;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .gallery-item:hover { border-color: var(--gold); transform: scale(1.02); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── PRICELIST ── */
+  #prices { background: var(--dark2); }
+  .prices-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+  }
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color .3s, transform .3s;
+  }
+  .price-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .price-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .price-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold2);
+    line-height: 1.3;
+  }
+  .price-card-duration {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .price-card-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .price-card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .price-card-btn {
+    display: inline-block;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 4px;
+  }
+  .price-card-btn:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+  @media (max-width: 768px) {
+    .prices-wrap { grid-template-columns: 1fr; }
+  }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--dark); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: transform .3s, border-color .3s;
+    overflow: hidden;
+  }
+  .product-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .product-img {
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(135deg, #1e2f45 0%, #111b27 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+  .product-info { padding: 20px; }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold2);
+    margin-bottom: 6px;
+  }
+  .product-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--dark2); }
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .contact-info { }
+  .contact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .contact-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .contact-value { font-size: 15px; color: var(--text); }
+  .map-placeholder {
+    width: 100%;
+    height: 320px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(201,185,154,0.02) 20px,
+      rgba(201,185,154,0.02) 40px
+    );
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 3px;
+  }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+  .footer-socials { display: flex; gap: 16px; }
+  .footer-socials a {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all .3s;
+  }
+  .footer-socials a:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(24px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 0; margin-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all .3s;
+  }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 72px 20px; }
+    .modal-header { grid-template-columns: 1fr; }
+    .modal-photo-placeholder { height: 200px; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; text-align: center; }
+    .works-grid { grid-template-columns: repeat(2,1fr); }
+    #lang-switch { margin-left: 0; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* multipage visibility: barbers */
+  #hero, #prices, #products, #contact { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index-masolat.html" class="nav-logo">D BARBERSHOP</a>
+  <ul class="nav-links">
+    <li><a href="barbers.html" class="t" data-ro="Barberi" data-hu="Borbélyok">Barberi</a></li>
+    <li><a href="prices.html" class="t" data-ro="Prețuri" data-hu="Árlista">Prețuri</a></li>
+        <li><a href="contact.html" class="t" data-ro="Contact" data-hu="Kapcsolat">Contact</a></li>
+  </ul>
+  <div id="lang-switch">
+    <button class="lang-btn active" onclick="setLang('ro')">RO</button>
+    <button class="lang-btn" onclick="setLang('hu')">HU</button>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="barbers.html" class="t" data-ro="Barberi" data-hu="Borbélyok" onclick="toggleMenu()">Barberi</a>
+  <a href="prices.html" class="t" data-ro="Prețuri" data-hu="Árlista" onclick="toggleMenu()">Prețuri</a>
+    <a href="contact.html" class="t" data-ro="Contact" data-hu="Kapcsolat" onclick="toggleMenu()">Contact</a>
+  <div style="display:flex; gap:8px; padding: 14px 36px;">
+    <button class="lang-btn active" onclick="setLang('ro'); toggleMenu()">RO</button>
+    <button class="lang-btn" onclick="setLang('hu'); toggleMenu()">HU</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <img src="436723000_1074418107125036_4476358268651738579_n.jpg" alt="D Barbershop Logo" class="hero-logo-img" onerror="this.style.display='none'">
+    <div class="hero-badge t" data-ro="Calitate · Stil · Tradiție" data-hu="Minőség · Stílus · Hagyomány">Calitate · Stil · Tradiție</div>
+    <h1 class="hero-title">D Barbershop</h1>
+    <p class="hero-sub t" data-ro="Experiența bărbieriei moderne" data-hu="A modern borbélyság élménye">Experiența bărbieriei moderne</p>
+    <div class="hero-btns">
+      <a href="barbers.html" class="btn-primary t" data-ro="Întâlnește Barberii" data-hu="Ismerje meg borbélyainkat">Întâlnește Barberii</a>
+      <a href="prices.html" class="btn-outline t" data-ro="Vezi Prețurile" data-hu="Árlista megtekintése">Vezi Prețurile</a>
+    </div>
+  </div>
+</section>
+
+<!-- BARBERS -->
+<section id="barbers">
+  <div class="section-label t" data-ro="Echipa noastră" data-hu="Csapatunk">Echipa noastră</div>
+  <h2 class="section-title t" data-ro="Barberii Noștri" data-hu="Borbélyaink">Barberii Noștri</h2>
+  <div class="section-line"></div>
+  <div class="barbers-grid">
+
+    <!-- Aron -->
+    <div class="barber-card" onclick="openModal('aron')">
+      <img class="barber-photo" src="../kepek/aron-profil.jpeg" alt="Áron profilkép">
+      <div class="barber-info">
+        <div class="barber-name">Aron</div>
+        <div class="barber-role t" data-ro="Barber Senior" data-hu="Senior Borbély">Barber Senior</div>
+        <p class="barber-desc t"
+           data-ro="Specialist în fade-uri moderne și beard styling."
+           data-hu="Specialista a modern fade-ekben és szakállápolásban.">
+           Specialist în fade-uri moderne și beard styling.
+        </p>
+        <span class="barber-btn t" data-ro="Vezi lucrările →" data-hu="Munkái megtekintése →">Vezi lucrările →</span>
+      </div>
+    </div>
+
+    <!-- Gábor -->
+    <div class="barber-card" onclick="openModal('gabor')">
+      <img class="barber-photo" src="../kepek/gabor-profil.jpg" alt="Gábor profilkép">
+      <div class="barber-info">
+        <div class="barber-name">Gábor</div>
+        <div class="barber-role t" data-ro="Barber Senior" data-hu="Senior Borbély">Barber Senior</div>
+        <p class="barber-desc t"
+           data-ro="Expert în stiluri clasice și tehnici contemporane de barbering."
+           data-hu="Szakértő a klasszikus stílusokban és kortárs borbély technikákban.">
+           Expert în stiluri clasice și tehnici contemporane de barbering.
+        </p>
+        <span class="barber-btn t" data-ro="Vezi lucrările →" data-hu="Munkái megtekintése →">Vezi lucrările →</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL ARON -->
+<div class="modal-overlay" id="modal-aron">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('aron')">✕</button>
+    <div class="modal-header">
+      <div class="modal-photo-placeholder"><img src="../kepek/aron-profil.jpeg" alt="Áron profilkép"></div>
+      <div class="modal-bio">
+        <div class="modal-name">Aron</div>
+        <div class="modal-role t" data-ro="Barber Senior · D Barbershop" data-hu="Senior Borbély · D Barbershop">Barber Senior · D Barbershop</div>
+        <p class="modal-desc t"
+           data-ro="Aron este un barber pasionat cu experiență vastă în tehnici moderne de coafat și îngrijire a bărbii. Fiecare client pleacă cu o coafură perfectă, adaptată stilului său unic. Specializat în skin fade, taper fade și beard sculpting."
+           data-hu="Aron szenvedélyes borbély, aki modern hajvágó és szakállápolási technikákban szerzett széleskörű tapasztalattal rendelkezik. Minden ügyfél tökéletes, egyedi stílusához igazított hajviselettel távozik. Specialitások: skin fade, taper fade és szakállformázás.">
+           Aron este un barber pasionat cu experiență vastă în tehnici moderne de coafat și îngrijire a bărbii. Fiecare client pleacă cu o coafură perfectă, adaptată stilului său unic.
+        </p>
+      </div>
+    </div>
+    <div class="modal-works">
+      <div class="modal-works-title t" data-ro="Lucrările lui Aron" data-hu="Aron munkái">Lucrările lui Aron</div>
+      <div class="works-grid">
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.46.jpeg" alt="Aron work 1"></div>
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.47 (1).jpeg" alt="Aron work 2"></div>
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.47 (2).jpeg" alt="Aron work 3"></div>
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.47 (3).jpeg" alt="Aron work 4"></div>
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.47 (4).jpeg" alt="Aron work 5"></div>
+        <div class="work-item"><img src="../kepek/WhatsApp Image 2026-03-29 at 18.25.47.jpeg" alt="Aron work 6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL GABOR -->
+<div class="modal-overlay" id="modal-gabor">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('gabor')">✕</button>
+    <div class="modal-header">
+      <div class="modal-photo-placeholder"><img src="../kepek/gabor-profil.jpg" alt="Gábor profilkép"></div>
+      <div class="modal-bio">
+        <div class="modal-name">Gábor</div>
+        <div class="modal-role t" data-ro="Barber Senior · D Barbershop" data-hu="Senior Borbély · D Barbershop">Barber Senior · D Barbershop</div>
+        <p class="modal-desc t"
+           data-ro="Gábor combină tehnicile tradiționale cu tendințele moderne pentru a crea coafuri care impresionează. Cu un ochi fin pentru detalii, fiecare lucrare este o operă de artă. Expert în stiluri clasice europene și design de barbă."
+           data-hu="Gábor a hagyományos technikákat ötvözi a modern trendekkel, lenyűgöző hajviseletek létrehozásához. Éles szemmel a részletek iránt, minden munkája műalkotás. Szakértő a klasszikus európai stílusokban és szakálldesignban.">
+           Gábor combină tehnicile tradiționale cu tendințele moderne pentru a crea coafuri care impresionează. Cu un ochi fin pentru detalii, fiecare lucrare este o operă de artă.
+        </p>
+      </div>
+    </div>
+    <div class="modal-works">
+      <div class="modal-works-title t" data-ro="Lucrările lui Gábor" data-hu="Gábor munkái">Lucrările lui Gábor</div>
+      <div class="works-grid">
+        <div class="work-item"><img src="../kepek/gabor-work-1.jfif" alt="Gábor work 1"></div>
+        <div class="work-item"><img src="../kepek/gabor-work-2.jfif" alt="Gábor work 2"></div>
+        <div class="work-item"><img src="../kepek/gabor-work-3.jfif" alt="Gábor work 3"></div>
+        <div class="work-item"><img src="../kepek/gabor-work-4.jfif" alt="Gábor work 4"></div>
+        <div class="work-item"><img src="../kepek/gabor-work-5.jfif" alt="Gábor work 5"></div>
+        <div class="work-item"><img src="../kepek/gabor-work-6.jfif" alt="Gábor work 6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-center">
+    <div class="section-label t" data-ro="Inspirație" data-hu="Inspiráció">Inspirație</div>
+    <h2 class="section-title t" data-ro="Galeria Noastră" data-hu="Galériánk">Galeria Noastră</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+    <div class="gallery-item">✂</div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section id="prices">
+  <div class="section-label t" data-ro="Servicii" data-hu="Szolgáltatások">Servicii</div>
+  <h2 class="section-title t" data-ro="Lista de Prețuri" data-hu="Árlista">Lista de Prețuri</h2>
+  <div class="section-line"></div>
+  <div class="prices-wrap">
+
+    <!-- 1 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Tuns + Barbă + Sprâncene"
+            data-hu="Hajnyírás + Szakáll + Szemöldök">Tuns + Barbă + Sprâncene</div>
+          <div class="price-card-duration">45 – 55 min</div>
+        </div>
+        <div class="price-card-amount">90 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Tuns + barbă + sprâncene"
+        data-hu="Hajnyírás + Szakáll + Szemöldök">Tuns + barbă + sprâncene</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 2 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Tuns + Barbă"
+            data-hu="Hajnyírás + Szakáll">Tuns + Barbă</div>
+          <div class="price-card-duration">40 – 50 min</div>
+        </div>
+        <div class="price-card-amount">80 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Tuns + barbă"
+        data-hu="Hajnyírás + Szakáll">Tuns + barbă</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 3 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Tuns + Design"
+            data-hu="Nyírás + Minta">Tuns + Design</div>
+          <div class="price-card-duration">30 – 40 min</div>
+        </div>
+        <div class="price-card-amount">70 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Tuns și aranjat barbă."
+        data-hu="Nyírás és mintázás.">Tuns și aranjat barbă.</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 4 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Tuns"
+            data-hu="Hajnyírás">Tuns</div>
+          <div class="price-card-duration">25 – 35 min</div>
+        </div>
+        <div class="price-card-amount">60 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Tuns, aranjat."
+        data-hu="Nyírás, igazítás.">Tuns, aranjat.</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 5 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Barbă"
+            data-hu="Szakáll">Barbă</div>
+          <div class="price-card-duration">15 min</div>
+        </div>
+        <div class="price-card-amount">25 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Barbă aranjată cu formă, conturizare cu brici. Vopsit cu vopsea semi-permanentă — gratis."
+        data-hu="Szakáll formázás, borotvás kontúrozás. Féltartós festés — ingyenes.">Barbă aranjată cu formă, conturizare cu brici. Vopsit cu vopsea semi-permanentă — gratis.</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 6 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Sprâncene"
+            data-hu="Szemöldök">Sprâncene</div>
+          <div class="price-card-duration">5 min</div>
+        </div>
+        <div class="price-card-amount">15 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Sprâncene aranjate cu brici (fără durere 😄)."
+        data-hu="Szemöldök borotvával alakítva (fájdalommentesen 😄).">Sprâncene aranjate cu brici (fără durere 😄).</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+    <!-- 7 -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <div>
+          <div class="price-card-name t"
+            data-ro="Spălat"
+            data-hu="Mosás">Spălat</div>
+          <div class="price-card-duration">10 min</div>
+        </div>
+        <div class="price-card-amount">10 lei</div>
+      </div>
+      <div class="price-card-desc t"
+        data-ro="Spălat capilar."
+        data-hu="Hajmosás.">Spălat capilar.</div>
+      <a href="contact.html" class="price-card-btn t" data-ro="Programează" data-hu="Foglalás">Programează</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-center">
+    <div class="section-label t" data-ro="Magazin" data-hu="Bolt">Magazin</div>
+    <h2 class="section-title t" data-ro="Produsele Noastre" data-hu="Termékeink">Produsele Noastre</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- TABS -->
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('polo')" id="tab-polo">
+        <span class="t" data-ro="Tricouri Polo" data-hu="Pólók">Tricouri Polo</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('care')" id="tab-care">
+        <span class="t" data-ro="Îngrijire" data-hu="Ápolószerek">Îngrijire</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('acc')" id="tab-acc">
+        <span class="t" data-ro="Accesorii" data-hu="Kiegészítők">Accesorii</span>
+      </button>
+    </div>
+
+    <!-- Polo tab -->
+    <div class="tab-panel active" id="panel-polo">
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-img">👕</div>
+          <div class="product-info">
+            <div class="product-name">D Barbershop Polo</div>
+            <p class="product-desc t"
+               data-ro="Tricou polo oficial D Barbershop. Material premium, confort total. Disponibil în negru și alb."
+               data-hu="Hivatalos D Barbershop póló. Prémium anyag, teljes kényelem. Fekete és fehér színben elérhető.">
+               Tricou polo oficial D Barbershop. Material premium, confort total. Disponibil în negru și alb.
+            </p>
+            <div class="product-price">120 RON</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">👕</div>
+          <div class="product-info">
+            <div class="product-name">D Polo Limited</div>
+            <p class="product-desc t"
+               data-ro="Ediție limitată cu logo brodat. Calitate superioară, design exclusivist."
+               data-hu="Limitált kiadás hímzett logóval. Kiváló minőség, exkluzív dizájn.">
+               Ediție limitată cu logo brodat. Calitate superioară, design exclusivist.
+            </p>
+            <div class="product-price">150 RON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Care tab -->
+    <div class="tab-panel" id="panel-care">
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-img">🧴</div>
+          <div class="product-info">
+            <div class="product-name t" data-ro="Pomadă de Păr" data-hu="Hajpomádé">Pomadă de Păr</div>
+            <p class="product-desc t"
+               data-ro="Fixare puternică, luciu natural. Formula noastră exclusivă pentru un stil perfect toată ziua."
+               data-hu="Erős rögzítés, természetes fény. Exkluzív formulánk az egész napos tökéletes stílusért.">
+               Fixare puternică, luciu natural. Formula noastră exclusivă.
+            </p>
+            <div class="product-price">60 RON</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">🧴</div>
+          <div class="product-info">
+            <div class="product-name t" data-ro="Ulei de Barbă" data-hu="Szakállolaj">Ulei de Barbă</div>
+            <p class="product-desc t"
+               data-ro="Hidratare intensă pentru barbă și piele. Mix de uleiuri naturale premium."
+               data-hu="Intenzív hidratálás szakállnak és bőrnek. Prémium természetes olajok keveréke.">
+               Hidratare intensă pentru barbă și piele. Mix de uleiuri naturale premium.
+            </p>
+            <div class="product-price">75 RON</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">🧼</div>
+          <div class="product-info">
+            <div class="product-name t" data-ro="Șampon pentru Barbă" data-hu="Szakállsampon">Șampon pentru Barbă</div>
+            <p class="product-desc t"
+               data-ro="Curăță în profunzime, lasă barba moale și mătăsoasă."
+               data-hu="Mélyen tisztít, puha és selymes szakállt hagy maga után.">
+               Curăță în profunzime, lasă barba moale și mătăsoasă.
+            </p>
+            <div class="product-price">45 RON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accessories tab -->
+    <div class="tab-panel" id="panel-acc">
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-img">🧢</div>
+          <div class="product-info">
+            <div class="product-name t" data-ro="Șapcă D Barbershop" data-hu="D Barbershop sapka">Șapcă D Barbershop</div>
+            <p class="product-desc t"
+               data-ro="Șapcă snapback cu logo brodat. Ajustabilă, design premium."
+               data-hu="Snapback sapka hímzett logóval. Állítható, prémium dizájn.">
+               Șapcă snapback cu logo brodat. Ajustabilă, design premium.
+            </p>
+            <div class="product-price">80 RON</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">🪒</div>
+          <div class="product-info">
+            <div class="product-name t" data-ro="Set Îngrijire Barbă" data-hu="Szakáll ápolócsomag">Set Îngrijire Barbă</div>
+            <p class="product-desc t"
+               data-ro="Set complet: pieptăn, foarfece de precizie și ulei de barbă."
+               data-hu="Teljes készlet: fésű, precíziós olló és szakállolaj.">
+               Set complet: pieptăn, foarfece de precizie și ulei de barbă.
+            </p>
+            <div class="product-price">180 RON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label t" data-ro="Găsește-ne" data-hu="Találj meg minket">Găsește-ne</div>
+  <h2 class="section-title t" data-ro="Contact & Locație" data-hu="Kapcsolat & Helyszín">Contact & Locație</h2>
+  <div class="section-line"></div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label t" data-ro="Adresă" data-hu="Cím">Adresă</div>
+          <div class="contact-value">Strada Independenței 2, 445100 Carei</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📲</div>
+        <div>
+          <div class="contact-label t" data-ro="Rezervare telefonică" data-hu="Telefonos foglalás">Rezervare telefonică</div>
+          <div class="contact-value"><a href="tel:0755226675">Áron: 0755226675</a><br><a href="tel:0759614248">Gábor: 0759614248</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <div>
+          <div class="contact-label t" data-ro="Program" data-hu="Nyitvatartás">Program</div>
+          <div class="contact-value t"
+               data-ro="Luni: Închis&#10;Marți–Vineri: 11:00 – 18:30&#10;Sâmbătă: 11:00 – 18:15&#10;Duminică: Închis"
+               data-hu="Hétfő: Zárva&#10;Kedd–Péntek: 11:00 – 18:30&#10;Szombat: 11:00 – 18:15&#10;Vasárnap: Zárva">
+            Luni: Închis<br>Marți–Vineri: 11:00 – 18:30<br>Sâmbătă: 11:00 – 18:15<br>Duminică: Închis
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📸</div>
+        <div>
+          <div class="contact-label">Instagram</div>
+          <div class="contact-value"><a href="https://www.instagram.com/d_barbershop_carei/" target="_blank" rel="noopener noreferrer">@d_barbershop_carei</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⭐</div>
+        <div>
+          <div class="contact-label t" data-ro="Evaluare Mero" data-hu="Mero értékelés">Evaluare Mero</div>
+          <div class="contact-value"><a class="t" href="https://mero.ro/p/d-barbershop-carei?absp=search_autocomplete&query=carei&categories=" target="_blank" rel="noopener noreferrer" data-ro="5.0 / 5 • ★★★★★ pe Mero" data-hu="5.0 / 5 • ★★★★★ a Merón">5.0 / 5 • ★★★★★ pe Mero</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⭐</div>
+        <div>
+          <div class="contact-label t" data-ro="Recenzii Google" data-hu="Google értékelés">Recenzii Google</div>
+          <div class="contact-value"><a class="t" href="https://www.google.com/search?client=opera-gx&hs=3ZL&sa=X&sca_esv=483bff7be855fde4&sxsrf=ANbL-n7FR6CpNYlCkhw8m7NXUS3W0eSjZA:1775130688320&q=D+Barbershop+Carei+Vélemények&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2MbQ0N7MwtzAzNzM2NDG1sLAw2cDI-IpR3kXBKbEoKbWoOCO_QME5sSg1UyHs8Mqc1NzDK_MqU7MXsRJSAQBpe0SiXgAAAA&rldimm=4197687867631458884&tbm=lcl&hl=hu-RO&ved=2ahUKEwjKvu2Qjc-TAxVE0AIHHfk1EmIQ9fQKegQILRAG&biw=1871&bih=955&dpr=1#lkt=LocalPoiReviews" target="_blank" rel="noopener noreferrer" data-ro="5.0 / 5 • ★★★★★ pe Google" data-hu="5.0 / 5 • ★★★★★ a Google-on">5.0 / 5 • ★★★★★ pe Google</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder">
+  <a href="https://www.google.com/maps/place/D+Barbershop+Carei/@47.6904557,22.4634899,19.5z/data=!4m6!3m5!1s0x47478d9dd0967103:0x3a412ee01423da44!8m2!3d47.6903584!4d22.463171!16s%2Fg%2F11y3tg_h34?entry=ttu&g_ep=EgoyMDI2MDMzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="t" data-ro="Deschide locația în Google Maps" data-hu="Megnyitás Google Térképen">Deschide locația în Google Maps</a>
+</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">D BARBERSHOP</div>
+  <div class="footer-copy t" data-ro="© 2024 D Barbershop. Toate drepturile rezervate." data-hu="© 2024 D Barbershop. Minden jog fenntartva.">© 2024 D Barbershop. Toate drepturile rezervate.</div>
+  <div class="footer-socials">
+    <a href="#" title="Instagram">IG</a>
+    <a href="#" title="Facebook">FB</a>
+  </div>
+</footer>
+
+<script>
+  // ── LANGUAGE ──
+  let currentLang = localStorage.getItem('dbarberLang') || 'ro';
+
+  function setLang(lang) {
+    currentLang = (lang === 'hu') ? 'hu' : 'ro';
+    localStorage.setItem('dbarberLang', currentLang);
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+      const handler = btn.getAttribute('onclick') || '';
+      if (handler.includes("setLang('" + currentLang + "')")) {
+        btn.classList.add('active');
+      }
+    });
+
+    document.querySelectorAll('.t').forEach(el => {
+      const val = el.getAttribute('data-' + currentLang);
+      if (val) {
+        // preserve line breaks
+        if (val.includes('&#10;')) {
+          el.innerHTML = val.replace(/&#10;/g, '<br>');
+        } else {
+          el.textContent = val;
+        }
+      }
+    });
+  }
+
+  // apply saved language on page load
+  setLang(currentLang);
+  // ── HAMBURGER ──
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // ── MODALS ──
+  function openModal(name) {
+    document.getElementById('modal-' + name).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(name) {
+    document.getElementById('modal-' + name).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // ── TABS ──
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  // ── SCROLL ANIMATION ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.barber-card, .product-card, .price-category, .contact-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
