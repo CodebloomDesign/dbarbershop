@@ -1,4 +1,11 @@
-<svg viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" width="200" height="210" bis_size="{&quot;x&quot;:260,&quot;y&quot;:0,&quot;w&quot;:200,&quot;h&quot;:210,&quot;abs_x&quot;:854,&quot;abs_y&quot;:166}">
-  <rect width="200" height="200" fill="#1a2e35" rx="24" bis_size="{&quot;x&quot;:260,&quot;y&quot;:0,&quot;w&quot;:200,&quot;h&quot;:200,&quot;abs_x&quot;:854,&quot;abs_y&quot;:166}" style="fill:rgb(26, 46, 53);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="100" y="148" text-anchor="middle" font-family="Georgia, serif" font-size="140" font-weight="700" fill="#c8b89a" bis_size="{&quot;x&quot;:301,&quot;y&quot;:20,&quot;w&quot;:117,&quot;h&quot;:159,&quot;abs_x&quot;:895,&quot;abs_y&quot;:186}" style="fill:rgb(200, 184, 154);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:140px;font-weight:700;text-anchor:middle;dominant-baseline:auto">D</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#050505"/>
+  <text
+    x="32"
+    y="42"
+    text-anchor="middle"
+    font-family="'Cormorant Garamond', Georgia, serif"
+    font-size="38"
+    fill="#c9bfa8"
+  >D</text>
 </svg>
