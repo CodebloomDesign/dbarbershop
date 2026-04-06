@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D Barbershop · Politica de cookies</title>
+  <link rel="icon" type="image/svg+xml" href="favicon_D_simple.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090909;
+      --card: #121212;
+      --line: rgba(201,185,154,.22);
+      --text: #ede2c8;
+      --muted: #c3b697;
+      --gold: #c9b99a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.65;
+    }
+    .wrap { max-width: 940px; margin: 0 auto; padding: 28px 20px 60px; }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 24px;
+    }
+    .lang { display: flex; gap: 8px; }
+    .lang button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .lang button.active,
+    .lang button:hover { color: var(--gold); border-color: var(--gold); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      margin: 8px 0 10px;
+      color: var(--gold);
+    }
+    .intro { color: var(--muted); margin-bottom: 22px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--gold);
+      margin: 0 0 8px;
+    }
+    p { margin: 0 0 10px; }
+    ul { margin: 0; padding-left: 18px; }
+    li { margin-bottom: 6px; color: var(--muted); }
+    .back {
+      margin-top: 18px;
+      display: inline-block;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .back:hover { border-color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 14px 46px; }
+      .top { flex-wrap: wrap; align-items: flex-start; }
+      .lang { width: 100%; justify-content: flex-start; }
+      .lang button { padding: 7px 9px; font-size: 11px; }
+      h1 { font-size: 32px; line-height: 1.2; }
+      h2 { font-size: 22px; }
+      .card { padding: 14px; }
+      p, li { font-size: 14px; line-height: 1.7; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="index.html">D BARBERSHOP</a>
+      <div class="lang">
+        <button class="lang-btn active" onclick="setLang('ro')">RO</button>
+        <button class="lang-btn" onclick="setLang('hu')">HU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <h1 class="t" data-ro="Politica de cookies" data-hu="Cookie szabályzat" data-en="Cookie Policy">Politica de cookies</h1>
+    <p class="intro t" data-ro="Folosim cookies într-un mod minim, doar pentru funcționarea normală a site-ului." data-hu="A cookie-kat minimális módon használjuk, csak a weboldal normál működéséhez." data-en="We use cookies minimally, only for the normal operation of the website.">Folosim cookies într-un mod minim, doar pentru funcționarea normală a site-ului.</p>
+
+    <div class="card">
+      <h2 class="t" data-ro="Ce sunt cookies" data-hu="Mik azok a cookie-k" data-en="What cookies are">Ce sunt cookies</h2>
+      <p class="t" data-ro="Cookies sunt fișiere mici salvate în browser, care ajută site-ul să funcționeze corect și să rețină setări de bază, precum limba aleasă." data-hu="A cookie-k kis fájlok, amelyeket a böngésző ment el, és segítik a weboldal helyes működését, valamint az alapbeállítások (például nyelv) megőrzését." data-en="Cookies are small files stored in your browser that help the website function properly and remember basic settings, such as selected language.">Cookies sunt fișiere mici salvate în browser, care ajută site-ul să funcționeze corect și să rețină setări de bază, precum limba aleasă.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Ce folosim pe acest site" data-hu="Mit használunk ezen az oldalon" data-en="What we use on this site">Ce folosim pe acest site</h2>
+      <ul>
+        <li class="t" data-ro="Doar cookies esențiale pentru funcționare (de exemplu, preferința de limbă)." data-hu="Csak működéshez szükséges cookie-kat használunk (például nyelvi beállítás)." data-en="Only essential cookies for functionality (for example, language preference).">Doar cookies esențiale pentru funcționare (de exemplu, preferința de limbă).</li>
+        <li class="t" data-ro="Nu folosim tracking publicitar sau profilare pe acest site, decât dacă va fi implementat explicit și anunțat separat." data-hu="Nem használunk reklámkövetést vagy profilalkotást ezen az oldalon, kivéve ha ezt külön, előzetesen bejelentjük." data-en="We do not use advertising tracking or profiling on this website, unless explicitly implemented and announced separately.">Nu folosim tracking publicitar sau profilare pe acest site, decât dacă va fi implementat explicit și anunțat separat.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Controlul tău" data-hu="Az Ön beállításai" data-en="Your control options">Controlul tău</h2>
+      <p class="t" data-ro="Poți controla sau șterge cookies din setările browserului tău. Dacă dezactivezi cookies esențiale, anumite funcții pot să nu mai funcționeze corect." data-hu="A cookie-kat a böngésző beállításaiban kezelheti vagy törölheti. Ha a szükséges cookie-kat letiltja, egyes funkciók nem működhetnek megfelelően." data-en="You can control or delete cookies from your browser settings. If essential cookies are disabled, some website functions may not work properly.">Poți controla sau șterge cookies din setările browserului tău. Dacă dezactivezi cookies esențiale, anumite funcții pot să nu mai funcționeze corect.</p>
+    </div>
+
+    <a class="back t" href="index.html" data-ro="← Înapoi la site" data-hu="← Vissza a weboldalra" data-en="← Back to website">← Înapoi la site</a>
+  </div>
+
+  <script>
+    let currentLang = localStorage.getItem('dbarberLang') || 'ro';
+    function setLang(lang) {
+      currentLang = (lang === 'hu' || lang === 'en') ? lang : 'ro';
+      localStorage.setItem('dbarberLang', currentLang);
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        const h = btn.getAttribute('onclick') || '';
+        if (h.includes("setLang('" + currentLang + "')")) btn.classList.add('active');
+      });
+      document.querySelectorAll('.t').forEach(el => {
+        const val = el.getAttribute('data-' + currentLang)
+          || el.getAttribute('data-ro');
+        if (val) el.textContent = val;
+      });
+    }
+    setLang(currentLang);
+  </script>
+</body>
+</html>
+
+
+

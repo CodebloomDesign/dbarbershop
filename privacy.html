@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D Barbershop · Politica de confidențialitate</title>
+  <link rel="icon" type="image/svg+xml" href="favicon_D_simple.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090909;
+      --card: #121212;
+      --line: rgba(201,185,154,.22);
+      --text: #ede2c8;
+      --muted: #c3b697;
+      --gold: #c9b99a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.65;
+    }
+    .wrap { max-width: 940px; margin: 0 auto; padding: 28px 20px 60px; }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 24px;
+    }
+    .lang { display: flex; gap: 8px; }
+    .lang button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .lang button.active,
+    .lang button:hover { color: var(--gold); border-color: var(--gold); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      margin: 8px 0 10px;
+      color: var(--gold);
+    }
+    .intro { color: var(--muted); margin-bottom: 22px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--gold);
+      margin: 0 0 8px;
+    }
+    p { margin: 0 0 10px; }
+    ul { margin: 0; padding-left: 18px; }
+    li { margin-bottom: 6px; color: var(--muted); }
+    .back {
+      margin-top: 18px;
+      display: inline-block;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .back:hover { border-color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 14px 46px; }
+      .top { flex-wrap: wrap; align-items: flex-start; }
+      .lang { width: 100%; justify-content: flex-start; }
+      .lang button { padding: 7px 9px; font-size: 11px; }
+      h1 { font-size: 32px; line-height: 1.2; }
+      h2 { font-size: 22px; }
+      .card { padding: 14px; }
+      p, li { font-size: 14px; line-height: 1.7; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="index.html">D BARBERSHOP</a>
+      <div class="lang">
+        <button class="lang-btn active" onclick="setLang('ro')">RO</button>
+        <button class="lang-btn" onclick="setLang('hu')">HU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <h1 class="t" data-ro="Politica de confidențialitate" data-hu="Adatvédelmi szabályzat" data-en="Privacy Policy">Politica de confidențialitate</h1>
+    <p class="intro t" data-ro="Această pagină explică simplu ce date minime putem prelucra și de ce." data-hu="Ez az oldal röviden bemutatja, milyen minimális adatokat kezelhetünk és milyen célból." data-en="This page explains in simple terms what minimal data we may process and why.">Această pagină explică simplu ce date minime putem prelucra și de ce.</p>
+
+    <div class="card">
+      <h2 class="t" data-ro="Operator" data-hu="Adatkezelő" data-en="Data Controller">Operator</h2>
+      <p><strong>GABOR ARON BARBER S.R.L.</strong><br>
+      CUI: 49760033<br>
+      Nr. Registru: J30/270/13.03.2024<br>
+      Municipiul Carei, Strada Peles, Nr. 22, Judet Satu Mare<br>
+      Email: <a href="mailto:Gaborg1997@gmail.com">Gaborg1997@gmail.com</a><br>
+      Tel: <a href="tel:0759614248">0759614248</a></p>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Ce date colectăm" data-hu="Milyen adatokat gyűjtünk" data-en="What data we collect">Ce date colectăm</h2>
+      <ul>
+        <li class="t" data-ro="Date tehnice minime, precum adresa IP și informații de bază de funcționare ale site-ului (log-uri de server)." data-hu="Minimális technikai adatok, például IP-cím és a weboldal működéséhez szükséges alapvető szervernaplók." data-en="Minimal technical data, such as IP address and basic website operation logs.">Date tehnice minime, precum adresa IP și informații de bază de funcționare ale site-ului (log-uri de server).</li>
+        <li class="t" data-ro="Date de contact doar dacă ne scrii voluntar (de exemplu pe email sau telefon)." data-hu="Kapcsolati adatok csak akkor, ha önkéntesen kapcsolatba lépsz velünk (például emailen vagy telefonon)." data-en="Contact details only if you voluntarily contact us (for example by email or phone).">Date de contact doar dacă ne scrii voluntar (de exemplu pe email sau telefon).</li>
+        <li class="t" data-ro="Nu oferim conturi de utilizator și nu avem rezervări online pe site." data-hu="Az oldalon nincs felhasználói fiók és nincs online foglalási rendszer." data-en="We do not provide user accounts and there is no online booking system on this website.">Nu oferim conturi de utilizator și nu avem rezervări online pe site.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Scopul prelucrării" data-hu="Az adatkezelés célja" data-en="Purpose of processing">Scopul prelucrării</h2>
+      <ul>
+        <li class="t" data-ro="Funcționarea și securitatea site-ului." data-hu="A weboldal működtetése és biztonsága." data-en="Website operation and security.">Funcționarea și securitatea site-ului.</li>
+        <li class="t" data-ro="Răspuns la solicitări trimise direct către salon." data-hu="A szalonhoz érkező megkeresések megválaszolása." data-en="Responding to requests sent directly to the barbershop.">Răspuns la solicitări trimise direct către salon.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Perioada de stocare" data-hu="Adatmegőrzési idő" data-en="Data retention">Perioada de stocare</h2>
+      <p class="t" data-ro="Păstrăm datele doar cât este necesar pentru scopurile de mai sus. În mod obișnuit, mesajele și datele de contact sunt păstrate cel mult 12 luni, dacă legea nu impune alt termen." data-hu="Az adatokat csak a fenti célokhoz szükséges ideig őrizzük. Általában az üzeneteket és kapcsolati adatokat legfeljebb 12 hónapig tároljuk, hacsak jogszabály másként nem rendelkezik." data-en="We keep data only as long as needed for the purposes above. Usually, messages and contact details are retained for up to 12 months, unless legal obligations require otherwise.">Păstrăm datele doar cât este necesar pentru scopurile de mai sus. În mod obișnuit, mesajele și datele de contact sunt păstrate cel mult 12 luni, dacă legea nu impune alt termen.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="t" data-ro="Drepturile tale" data-hu="Az Ön jogai" data-en="Your rights">Drepturile tale</h2>
+      <p class="t" data-ro="Conform GDPR, poți solicita acces, rectificare, ștergere sau limitare a prelucrării datelor personale." data-hu="A GDPR alapján kérhet hozzáférést, helyesbítést, törlést vagy az adatkezelés korlátozását." data-en="Under GDPR, you can request access, correction, deletion, or restriction of personal data processing.">Conform GDPR, poți solicita acces, rectificare, ștergere sau limitare a prelucrării datelor personale.</p>
+      <p class="t" data-ro="Pentru solicitări GDPR, scrie la: Gaborg1997@gmail.com" data-hu="GDPR kérésekhez írjon ide: Gaborg1997@gmail.com" data-en="For GDPR requests, contact: Gaborg1997@gmail.com">Pentru solicitări GDPR, scrie la: Gaborg1997@gmail.com</p>
+    </div>
+
+    <a class="back t" href="index.html" data-ro="← Înapoi la site" data-hu="← Vissza a weboldalra" data-en="← Back to website">← Înapoi la site</a>
+  </div>
+
+  <script>
+    let currentLang = localStorage.getItem('dbarberLang') || 'ro';
+    function setLang(lang) {
+      currentLang = (lang === 'hu' || lang === 'en') ? lang : 'ro';
+      localStorage.setItem('dbarberLang', currentLang);
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        const h = btn.getAttribute('onclick') || '';
+        if (h.includes("setLang('" + currentLang + "')")) btn.classList.add('active');
+      });
+      document.querySelectorAll('.t').forEach(el => {
+        const val = el.getAttribute('data-' + currentLang)
+          || el.getAttribute('data-ro');
+        if (val) el.textContent = val;
+      });
+    }
+    setLang(currentLang);
+  </script>
+</body>
+</html>
+
+
+
